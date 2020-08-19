@@ -1,0 +1,13 @@
+12
+static 3 NeuroWhAI Hip RanolP
+nlog 0
+Basix 2 Honey Cyanpen
+NeuroWhAI 2 Sangwon CodingBear
+RanolP 2 nlog Ace
+CodingBear 0
+Honey 1 Hantak
+Cyanpen 0
+Sangwon 0
+Hantak 0
+Ace 0
+Hip 1 Basix
