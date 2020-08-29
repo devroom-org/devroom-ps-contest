@@ -1,0 +1,142 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Programming/Coding Assignment
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original author:
+% Ted Pavlic (http://www.tedpavlic.com)
+% License : CC Attribution-NC-SA 3.0.
+% Read LICENSE for more information.
+%
+% Specially edited for competitive programming problem description
+% by koosaga(http://koosaga.com), seungwonpark(http://swpark.me)
+%
+% GitHub repository for this template (currently(2017.05.21) private) :
+% https://github.com/seungwonpark/PS-latex-template
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+\usepackage[hangul]{kotex} % Required for using Korean
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+\usepackage{graphicx} % Required to insert images
+\usepackage{listings} % Required for insertion of code
+\usepackage{courier} % Required for the courier font
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage{amsthm,amsmath} % Equation typesetting
+\usepackage{algorithm, algpseudocode} % algorithm
+\usepackage{verbatim} % for commment, verbatim environment
+\usepackage{spverbatim} % automatic linebreak verbatim environment
+\usepackage{listings} % Required for lstlisting
+\lstset{breaklines=true} % Word wrap within listings environment
+\lstset{basicstyle = \ttfamily,columns=fullflexible}
+\usepackage{hyperref} % Required for using href
+\usepackage{pgffor} % Required for using \foreach
+
+\lstset{columns=fullflexible}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usepackage{datetime} % Used for showing version as last modified time
+\yyyymmdddate
+\usepackage{multicol}
+\setlength{\columnseprule}{0.4pt}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{mathtools}
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1} % Line spacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{}
+\chead{개발자 수다방 PS 대회 F번: 총통의 축지법} % Top center head
+\rhead{2020년 8월 29일 토요일} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{\thepage} % Bottom center footer
+%\rfoot{Last modified : \today{} \currenttime}
+\def\inputdataname{입력} % Name of 'input'
+\def\outputdataname{출력} % Name of 'output'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\setcounter{secnumdepth}{0} % Removes default section numbers
+\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems
+
+\newcommand{\iodataNo}[1]{%
+	\begin{minipage}{\textwidth}
+		\begin{multicols}{2}
+			\href{run:input#1.txt}{\inputdataname#1} \\
+			\rule{\columnwidth}{1pt}
+			\lstinputlisting[language={}]{input/input#1.txt}
+			\columnbreak
+			\href{run:output#1.txt}{\outputdataname#1} \\
+			\rule{\columnwidth}{1pt}
+			\lstinputlisting[language={}]{output/output#1.txt}
+		\end{multicols}
+		\vspace{\baselineskip}
+	\end{minipage}
+
+}
+
+\begin{document}
+\section{F번: 총통의 축지법}
+    문제를 잘 해석하면 임의의 $p_{1} \in \{1,...,N\}^{M}$에 대하여 다음 조건을 만족하는 집합 $S$를 찾으라는 문제이다. \\ \\
+	여기에서 임의의 $P, Q \in \{1,...,N\}^{M}$에 대하여 $P \oplus Q = (P_{1} \oplus Q_{1},...,P_{M} \oplus Q_{M})$ 
+	(단, 임의의 $a, b \in \mathbb{N}$에 관하여 $a \oplus b$는 $a, b$에 관한 \href{https://en.wikipedia.org/wiki/Exclusive_or}{XOR} 연산이고, $P_{i}$, $Q_{i}$는 각각 $P, Q \in \{1,...,N\}^{M}$에 대한 $i$번째 성분을 의미)로 정의한다.
+    \begin{itemize}
+        \item $S$는 총통이 축지법을 쓰면서 방문한 모든 정점들의 집합이다.
+        \item 모든 $T \subset S$에 관하여 $\bigoplus_{p_{i} \in T} p_{i}$의 각 성분이 하나라도 0이 되지 않는다. (단, $T \neq \emptyset$)
+        \item $\sum_{p_{i} \in S} d(p_{1}, p_{i})$가 최대가 되는 집합이다.
+	\end{itemize}
+	이걸 대체 어떻게 풀 것인지 한참 고민하고 있던 당신에게 Matroid라는 것이 머리에 떠올랐다면 이 문제를 이미 풀었을 것이다.
+	각 행을 독립적으로 생각해보자. 
+	그러면 부분 문제로 Vector matroid의 Maximum weight independent set의 크기를 구하는 것으로 볼 수 있다. \\ \\
+	따라서 각 성분별로 독립적으로 부분문제를 풀어서 각 성분 중에서 independent set의 크기를 출력하면 이 문제가 풀릴 것이다. (Matroid의 성질에 의해서 임의의 independent set의 부분집합 또한 independent set 이다) \\
+	그런데, 어떻게 임의의 Matroid에 관하여 Maximum weight independent set을 구할까?
+	이 문제는 놀랍게도 Greedy 알고리즘으로 해결할 수 있다. \\ \\ 
+	임의의 Matroid $\mathcal{M}=(E,\mathcal{I})$와 weight function $w: E \to \mathbb{R}_{+}$를 정의하자.
+	그리고 임의의 $T \subset E$가 independent set인지 판정하는 oracle\footnote{임의의 결정 문제 (decision problem)을 하나의 연산으로 해결하는 추상 기계 \cite{oracle}}를 정의할 수 있다.
+	이 Instance를 입력으로 하는 Best-In Greedy을 정의할 수 있다. \cite[p.~317--318]{korte_vygen_2008}
+	\begin{algorithm}
+		\caption{Best-In Greedy Algorithm}
+		\label{best_in_greedy}
+		\begin{algorithmic}[1]
+			\Procedure{Best-In-Greedy}{A weighted matroid $\mathcal{M}=(E,\mathcal{I})$ with weight function $w: E \to \mathbb{R}_{+}$}
+				\State Sort $E=\{e_{1},...,e_{n}\}$ such that $w(e_{1}) \geq ... \geq w(e_{n})$
+				\State Set $T \gets \emptyset$
+				\For{$i \gets 1, n$}
+					\If{$T \cup \{e_{i}\} \in \mathcal{I}$}
+						\State $T \gets T \cup \{e_{i}\}$
+					\EndIf
+				\EndFor
+				\State \textbf{return} $T$
+			\EndProcedure
+		\end{algorithmic}
+	\end{algorithm} \\
+	$O(N\log{N})$시간 정렬 알고리즘을 사용하면 \ref{best_in_greedy}의 시간 복잡도는 $O(N\log{N})$이다.
+	따라서 우리는 $M$차원 각 성분마다 \ref{best_in_greedy}을 수행하고 크기의 최솟값을 구하면 된다.
+	이때 independent oracle의 수행 시간을 알아야 한다. 
+	Naïve로 하면 independent oracle의 수행 시간은 $O(|T|)$이겠지만 이미 이전에 계산한 값을 다시 이용할 수 있으니 상수 시간에 이를 수행할 수 있다.
+	따라서 전체 시간 복잡도는 $O(NM\log{N})$이다.
+	\bibliographystyle{IEEEtranS}
+    \bibliography{Editorial_F}
+\end{document}

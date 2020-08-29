@@ -7,6 +7,5 @@
     </p>
 </div>
 
-2020년 8월 29일 토요일 오전 9시에 해설이 공개될 예정이다.
-
+[F번 해설 (PDF)](./Editorial_F.pdf)에 풀이 해설이 있다.
 [example_solution.rs](./example_solution.rs)에 예시 답안을 작성해두었다.
