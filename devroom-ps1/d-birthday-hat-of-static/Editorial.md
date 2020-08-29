@@ -7,6 +7,8 @@
     </p>
 </div>
 
-2020년 8월 29일 토요일 오전 9시에 라이브로 해설할 예정이다.
+[![개수다 PS D/E번 풀이](https://img.youtube.com/vi/R6Id5XFPG30/maxresdefault.jpg)](https://youtu.be/R6Id5XFPG30?t=310)
+
+위 이미지를 누르면 유튜브에서 해설을 확인할 수 있다.
 
 [example_solution.py](./example_solution.py)에 예시 답안을 작성해두었다.
